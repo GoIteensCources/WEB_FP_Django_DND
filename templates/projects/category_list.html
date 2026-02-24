@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Гільдії ігор — Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="fantasy-breadcrumb">
+    <a href="{% url 'products:home' %}">Головна</a>
+    <span class="separator">/</span>
+    <span>Гільдії</span>
+</div>
+
+<h1 class="fantasy-title">Гільдії ігор</h1>
+
+{% if categories %}
+<div class="fantasy-grid">
+    {% for category in categories %}
+    <a href="{% url 'products:category' slug=category.slug %}" class="fantasy-card" style="text-decoration:none;color:inherit;">
+        <span class="fantasy-card-icon">{{ category.icon }}</span>
+        <div class="fantasy-card-title">{{ category.name }}</div>
+        <div class="fantasy-card-desc">{{ category.description }}</div>
+        <div class="fantasy-card-meta">
+            <span>{{ category.products.count }} {{ category.products.count|pluralize:"гра,гри,ігор" }}</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="fantasy-empty">Гільдії ще не створені... Чарівник працює над цим!</div>
+{% endif %}
+{% endblock %}

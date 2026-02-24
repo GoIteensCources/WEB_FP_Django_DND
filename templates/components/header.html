@@ -1,0 +1,40 @@
+{% load static %}
+<header class="fantasy-header">
+    <div class="fantasy-header-bg"></div>
+    <div class="container">
+        <div class="fantasy-header-content">
+            <a href="{% url 'products:home' %}" class="fantasy-logo">
+                <img src="{% static 'media/logo.jpeg' %}" alt="Logo" class="fantasy-logo-img">
+                <h1 class="fantasy-title-header">Dice & Dragons</h1>
+            </a>
+            <button class="fantasy-burger" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="fantasy-nav" id="mainNav">
+                <ul>
+                    <li>
+                        <a href="{% url 'products:home' %}" class="fantasy-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                            Головна
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'products:categories_list' %}" class="fantasy-nav-link {% if request.resolver_match.url_name == 'categories_list' or request.resolver_match.url_name == 'category' %}active{% endif %}">
+                            Гільдії
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'products:product_list' %}" class="fantasy-nav-link {% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_details' %}active{% endif %}">
+                            Каталог
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('mainNav').classList.toggle('open');
+    this.classList.toggle('open');
+});
+</script>

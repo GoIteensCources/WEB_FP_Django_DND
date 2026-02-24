@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} — Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="fantasy-breadcrumb">
+    <a href="{% url 'products:home' %}">Головна</a>
+    <span class="separator">/</span>
+    <a href="{% url 'products:product_list' %}">Каталог</a>
+    <span class="separator">/</span>
+    <span>{{ product.name }}</span>
+</div>
+
+<h1 class="fantasy-title">{{ product.name }}</h1>
+
+<div class="fantasy-details-grid">
+    <div>
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fantasy-details-img">
+        {% endif %}
+    </div>
+    <div class="fantasy-details-info">
+        <div>
+            <a href="{% url 'products:category' slug=product.category.slug %}" class="fantasy-badge">
+                {{ product.category.icon }} {{ product.category.name }}
+            </a>
+        </div>
+
+        <div class="fantasy-price">{{ product.price }} грн</div>
+
+        <div class="fantasy-rating" style="font-size:1.1rem;">
+            Рейтинг: {{ product.rating }}/10
+        </div>
+
+        <div class="fantasy-params-grid">
+            <div class="fantasy-param">
+                <div class="fantasy-param-label">Гравці</div>
+                <div class="fantasy-param-value">{{ product.min_players }}-{{ product.max_players }}</div>
+            </div>
+            <div class="fantasy-param">
+                <div class="fantasy-param-label">Час гри</div>
+                <div class="fantasy-param-value">{{ product.play_time }} хв</div>
+            </div>
+            <div class="fantasy-param">
+                <div class="fantasy-param-label">Вік</div>
+                <div class="fantasy-param-value">{{ product.age_recommendation }}+</div>
+            </div>
+        </div>
+
+        <div class="fantasy-divider"><span>&#9734;</span></div>
+
+        <div class="fantasy-details-desc">{{ product.description }}</div>
+    </div>
+</div>
+{% endblock %}

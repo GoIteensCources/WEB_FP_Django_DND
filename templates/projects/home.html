@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Dice & Dragons — Магічна крамниця{% endblock %}
+
+{% block content %}
+<section class="fantasy-hero">
+    <h2 class="fantasy-hero-title">Ласкаво просимо до Крамниці!</h2>
+    <p class="fantasy-hero-sub">Тут кожна гра — це пригода, кожна категорія — гільдія відважних шукачів розваг. Обирай свій шлях!</p>
+    <div class="fantasy-hero-actions">
+        <a href="{% url 'products:product_list' %}" class="btn-fantasy">Переглянути каталог</a>
+        <a href="{% url 'products:categories_list' %}" class="btn-fantasy-outline">Гільдії ігор</a>
+    </div>
+</section>
+
+{% if categories %}
+<div class="fantasy-divider"><span>&#9734;</span></div>
+<div class="fantasy-section-heading">
+    <h2 class="fantasy-title">Гільдії</h2>
+</div>
+<div class="fantasy-grid">
+    {% for category in categories %}
+    <a href="{% url 'products:category' slug=category.slug %}" class="fantasy-card" style="text-decoration:none;color:inherit;">
+        <span class="fantasy-card-icon">{{ category.icon }}</span>
+        <div class="fantasy-card-title">{{ category.name }}</div>
+        <div class="fantasy-card-desc">{{ category.description|truncatewords:15 }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if best_products %}
+<div class="fantasy-divider"><span>&#9733;</span></div>
+<div class="fantasy-section-heading">
+    <h2 class="fantasy-title">Найкращі ігри</h2>
+</div>
+<div class="fantasy-grid">
+    {% for product in best_products %}
+    <div class="fantasy-card">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fantasy-card-img">
+        {% endif %}
+        <div class="fantasy-badge">{{ product.category.name }}</div>
+        <div class="fantasy-card-title" style="margin-top:0.8rem;">
+            <a href="{% url 'products:product_details' slug=product.slug %}">{{ product.name }}</a>
+        </div>
+        <div class="fantasy-card-desc">{{ product.description|truncatewords:12 }}</div>
+        <div class="fantasy-card-footer">
+            <span class="fantasy-price-small">{{ product.price }} грн</span>
+            <span class="fantasy-rating">{{ product.rating }}/10</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

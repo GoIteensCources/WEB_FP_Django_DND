@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}{{ category.name }} — Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="fantasy-breadcrumb">
+    <a href="{% url 'products:home' %}">Головна</a>
+    <span class="separator">/</span>
+    <a href="{% url 'products:categories_list' %}">Гільдії</a>
+    <span class="separator">/</span>
+    <span>{{ category.name }}</span>
+</div>
+
+<h1 class="fantasy-title">{{ category.icon }} {{ category.name }}</h1>
+{% if category.description %}
+<p class="fantasy-card-desc" style="font-size:1rem;margin-bottom:2rem;">{{ category.description }}</p>
+{% endif %}
+
+{% if products %}
+<h2 class="fantasy-subtitle">Ігри цієї гільдії</h2>
+<div class="fantasy-grid">
+    {% for product in products %}
+    <div class="fantasy-card">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fantasy-card-img">
+        {% endif %}
+        <div class="fantasy-card-title">
+            <a href="{% url 'products:product_details' slug=product.slug %}">{{ product.name }}</a>
+        </div>
+        <div class="fantasy-card-desc">{{ product.description|truncatewords:15 }}</div>
+        <div class="fantasy-card-footer">
+            <span class="fantasy-price-small">{{ product.price }} грн</span>
+            <span class="fantasy-rating">{{ product.rating }}/10</span>
+        </div>
+        <div class="fantasy-card-meta">
+            <span>{{ product.min_players }}-{{ product.max_players }} гравців</span>
+            <span>{{ product.play_time }} хв</span>
+            <span>{{ product.age_recommendation }}+</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="fantasy-empty">У цій гільдії ще немає ігор...</div>
+{% endif %}
+{% endblock %}
