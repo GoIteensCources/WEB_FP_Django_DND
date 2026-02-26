@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Product, Category
@@ -38,3 +39,13 @@ def product_list(request):
 def product_details(request, slug):
     product = get_object_or_404(Product.objects.select_related('category'), slug=slug)
     return render(request, 'projects/product_details.html', {'product': product})
+
+
+def product_search(request):
+	query = request.GET.get('q', '')
+	results = []
+	if query:
+		results = Product.objects.filter(
+			Q(name__icontains=query) | Q(description__icontains=query)
+		)
+	return render(request, 'projects/product_search.html', {'query': query, 'results': results})

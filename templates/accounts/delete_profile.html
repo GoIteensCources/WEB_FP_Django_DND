@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Видалення акаунту | Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="account-card p-4 mt-2">
+
+      <h2 class="fantasy-title text-center" style="color: var(--red);">💀 Видалення Акаунту</h2>
+
+      <div class="text-center mb-4">
+        <p class="mb-1">Ви збираєтесь назавжди покинути Крамницю.</p>
+        <p class="mb-0"><strong>Цю дію неможливо скасувати.</strong></p>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger w-100 mb-3">Так, видалити мій акаунт</button>
+      </form>
+
+      <div class="text-center">
+        <a href="{% url 'account:profile' %}" class="fantasy-link">← Скасувати та повернутися</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

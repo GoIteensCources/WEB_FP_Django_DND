@@ -1,55 +1,77 @@
-# AI.md
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-Dice & Dragons — a fantasy-themed Django board game shop. Ukrainian UI/content, English code. Products are organized into "guilds" (categories) with a magical grimoire aesthetic.
+**Dice & Dragons** — a fantasy-themed Django board game shop. Ukrainian UI/content, English code. Categories are called "guilds"; the aesthetic is a magical grimoire/wizard's shop.
 
 ## Commands
 
 ```bash
-# Activate venv
+# Activate virtual environment (required before any manage.py commands)
 source .venv/bin/activate
 
-# Run dev server (http://127.0.0.1:8000/)
+# Install dependencies (only django and pillow are needed)
+pip install django pillow
+
+# Run development server
 python manage.py runserver
 
 # Migrations
 python manage.py makemigrations
 python manage.py migrate
 
-# Populate DB with test data (safe to re-run, uses get_or_create)
+# Populate DB with sample board game data (idempotent — uses get_or_create)
 python manage.py create_products
 
 # Run tests
-python manage.py test
-
-# Collect static files
-python manage.py collectstatic
+python manage.py test                         # all tests
+python manage.py test products                # single app
+python manage.py test products.tests.MyTest   # single test class
 ```
 
 ## Architecture
 
-**Framework:** Django 6.0.2, SQLite, Bootstrap 5.3.2
+**Stack:** Django 6.0.2, Python 3.12, SQLite, Bootstrap 5.3.2
 
-**Django Apps:**
-- `products` — main app: Category and Product models, catalog views, admin config
-- `account` — stub app for future user auth (not yet in INSTALLED_APPS)
+### Django Apps
 
-**Project layout:**
-- `dnd_project/` — Django project config (settings, root URLs)
-- `products/` — models, views, URLs, admin, management commands
-- `templates/` — base.html + components (header/footer) + page templates in `templates/projects/`
-- `static/` — `dnd_fantasy.css` (fantasy theme) + media assets
+- **`products`** — core catalog: `Category` and `Product` models, views, URLs, admin, and the `create_products` management command
+- **`account`** — user auth: `Profile` and `Address` models extending Django's built-in `User`; signals auto-create `Profile`+`Address` on `User` creation (wired via `AccountConfig.ready()`)
+- **`card`** — shopping basket; currently a stub (empty models/views/urlpatterns), next to be implemented
 
-**Key patterns:**
-- Mixed FBV and CBV views (home/product views are FBV, category views are CBV ListView/DetailView)
-- Auto-generated slugs on model save; all detail URLs use slugs, not IDs
-- `select_related('category')` used in product queries for optimization
-- Template inheritance: `base.html` → page templates; header/footer as `{% include %}` components
-- Related name: `category.products.all()` to access products from a category
+### URL Namespaces
 
-**URL structure:** Root includes `products.urls` at `/`. Admin at `/admin/`.
+| Namespace | Prefix | Key routes |
+|-----------|--------|------------|
+| `products` | `/` | `home`, `categories_list`, `category`, `product_list`, `product_details`, `search` |
+| `account` | `/account/` | `login`, `logout`, `register`, `profile`, `edit_profile`, `delete_profile` |
+| `card` | `/card/` | (empty — to be built) |
 
-## Design System
+### Models
 
-Fantasy color scheme: dark purple (#4b206b), dark blue (#2a3a5a), gold (#d4af37), teal accent (#00e6b8), parchment backgrounds. Cinzel serif font for headers. Custom CSS in `static/dnd_fantasy.css`.
+**`Category`:** `name`, `slug` (auto-generated), `icon` (emoji), `description`
+- Related name to products: `category.products.all()`
+
+**`Product`:** `name`, `slug` (auto-generated), `category` (FK), `description`, `price`, `rating`, `min_players`, `max_players`, `play_time`, `age_recommendation`, `image`
+
+**`Profile`:** OneToOne with `User`; has `phone_number` and FK to `Address`
+
+**`Address`:** FK to `User`; `street`, `city`, `postal_code`, `country`
+
+### Key Patterns
+
+- **Slugs:** Auto-generated on `save()` using `slugify(name, allow_unicode=True)` if not set. All detail URLs use slugs, not IDs.
+- **Views:** Mixed FBV (`home`, `product_list`, `product_details`, `product_search`) and CBV (`CategoryListView`, `CategoryDetailView`). Account views are all FBV.
+- **Query optimization:** `select_related('category')` used in product list/detail views.
+- **Templates:** `base.html` → page templates; header/footer as `{% include %}` components. Product pages live in `templates/projects/`, account pages in `templates/accounts/`.
+- **Signals:** `account/signals.py` imported in `AccountConfig.ready()` — auto-creates `Profile` and `Address` when a `User` is created.
+
+### Static & Media
+
+`MEDIA_ROOT` is set to `BASE_DIR / "static" / "media"` (media files live inside the `static/` directory). Product images are stored at `static/media/products/`. In development, media is served via `urlpatterns += static(...)` in `dnd_project/urls.py`.
+
+### Design System
+
+Fantasy color scheme: dark purple `#4b206b`, dark blue `#2a3a5a`, gold `#d4af37`, teal `#00e6b8`, parchment backgrounds. Cinzel serif font for headers. All custom styles in `static/dnd_fantasy.css`.

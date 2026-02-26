@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Профіль | Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-7">
+    <div class="account-card p-4 mt-2">
+
+      <h2 class="fantasy-title text-center">🧙 Мій Профіль</h2>
+
+      <div class="account-section-title">Основна інформація</div>
+      <ul class="account-info-list">
+        <li>
+          <span class="account-info-label">Логін</span>
+          <span class="account-info-value">{{ profile.user.username }}</span>
+        </li>
+        {% if profile.user.first_name or profile.user.last_name %}
+        <li>
+          <span class="account-info-label">Ім'я</span>
+          <span class="account-info-value">{{ profile.user.first_name }} {{ profile.user.last_name }}</span>
+        </li>
+        {% endif %}
+        <li>
+          <span class="account-info-label">Email</span>
+          <span class="account-info-value">{{ profile.user.email|default:"—" }}</span>
+        </li>
+        <li>
+          <span class="account-info-label">Телефон</span>
+          <span class="account-info-value">{{ profile.phone_number|default:"—" }}</span>
+        </li>
+      </ul>
+
+      <div class="account-section-title">Адреса доставки</div>
+      {% if profile.address and profile.address.city %}
+        <ul class="account-info-list">
+          <li>
+            <span class="account-info-label">Вулиця</span>
+            <span class="account-info-value">{{ profile.address.street|default:"—" }}</span>
+          </li>
+          <li>
+            <span class="account-info-label">Місто</span>
+            <span class="account-info-value">{{ profile.address.city }}</span>
+          </li>
+          <li>
+            <span class="account-info-label">Індекс</span>
+            <span class="account-info-value">{{ profile.address.postal_code|default:"—" }}</span>
+          </li>
+          <li>
+            <span class="account-info-label">Країна</span>
+            <span class="account-info-value">{{ profile.address.country|default:"—" }}</span>
+          </li>
+        </ul>
+      {% else %}
+        <p class="account-empty-hint">Адресу ще не вказано. <a href="{% url 'account:edit_profile' %}" class="fantasy-link">Додати</a></p>
+      {% endif %}
+
+      <div class="fantasy-divider mt-4"><span>✦</span></div>
+
+      <div class="d-flex flex-wrap gap-2 justify-content-between">
+        <a href="{% url 'account:edit_profile' %}" class="btn btn-primary">✏ Редагувати профіль</a>
+        <div class="d-flex gap-2">
+          <a href="{% url 'account:delete_profile' %}" class="btn btn-outline-danger btn-sm">Видалити акаунт</a>
+          <a href="{% url 'account:logout' %}" class="btn btn-danger">Вийти</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

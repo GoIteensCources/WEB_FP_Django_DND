@@ -1,3 +1,258 @@
+/* --- Horizontal Navigation --- */
+.fantasy-nav-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+.fantasy-nav-list {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.fantasy-nav-search {
+    margin-left: 1.5rem;
+}
+.fantasy-search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+.fantasy-search-input {
+    border-radius: 6px;
+    border: 1.5px solid var(--brown-light);
+    background: var(--parchment);
+    color: var(--text);
+    font-family: 'Cinzel', serif;
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    min-width: 120px;
+}
+.fantasy-search-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px var(--gold-light);
+}
+.fantasy-search-btn {
+    background: var(--gold-light);
+    color: var(--purple-dark);
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    font-size: 1.1rem;
+    padding: 0.3rem 0.7rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.fantasy-search-btn:hover {
+    background: var(--purple);
+    color: var(--gold-light);
+    border-color: var(--gold-light);
+}
+/* --- Account Navigation --- */
+.fantasy-nav-account-block {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+.fantasy-nav-account {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.fantasy-account-btn {
+    display: inline-block;
+    padding: 0.35rem 1.1rem;
+    border-radius: 8px;
+    background: var(--gold-light);
+    color: var(--purple-dark);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(75,32,107,0.08);
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.fantasy-account-btn.active, .fantasy-account-btn:hover {
+    background: var(--purple);
+    color: var(--gold-light);
+    border-color: var(--gold-light);
+}
+/* --- Account Form Labels & Errors --- */
+.account-card label {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.03em;
+}
+
+.account-field-error {
+    color: var(--red);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    font-family: 'MedievalSharp', cursive;
+}
+
+.account-help-text {
+    color: var(--blue);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+    line-height: 1.4;
+}
+
+/* --- Account Section Titles --- */
+.account-section-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 0.85rem;
+    margin: 1.4rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--parchment-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* --- Profile Info List --- */
+.account-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-info-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--parchment-dark);
+    gap: 1rem;
+}
+
+.account-info-list li:last-child {
+    border-bottom: none;
+}
+
+.account-info-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.account-info-value {
+    color: var(--text);
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.account-empty-hint {
+    color: var(--blue);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+/* --- Account Forms & Cards --- */
+.account-card, .card.fantasy-card {
+    background: var(--parchment-dark);
+    border: 2px solid var(--gold);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(75,32,107,0.12), 0 1.5px 0 var(--gold-light);
+    font-family: 'Cinzel', serif;
+}
+
+.account-card h2, .card.fantasy-card h2 {
+    color: var(--purple);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.account-card .btn, .card.fantasy-card .btn {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(75,32,107,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+
+.account-card .btn-primary, .card.fantasy-card .btn-primary {
+    background: var(--purple);
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+.account-card .btn-primary:hover, .card.fantasy-card .btn-primary:hover {
+    background: var(--gold);
+    color: var(--purple);
+}
+.account-card .btn-success, .card.fantasy-card .btn-success {
+    background: var(--teal);
+    border-color: var(--gold);
+    color: var(--purple);
+}
+.account-card .btn-success:hover, .card.fantasy-card .btn-success:hover {
+    background: var(--gold);
+    color: var(--teal);
+}
+.account-card .btn-danger, .card.fantasy-card .btn-danger {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--parchment);
+}
+.account-card .btn-danger:hover, .card.fantasy-card .btn-danger:hover {
+    background: #a93226;
+    border-color: #a93226;
+    color: var(--parchment);
+}
+.account-card .btn-outline-danger, .card.fantasy-card .btn-outline-danger {
+    background: transparent;
+    border-color: var(--red);
+    color: var(--red);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+}
+.account-card .btn-outline-danger:hover, .card.fantasy-card .btn-outline-danger:hover {
+    background: var(--red);
+    color: var(--parchment);
+}
+
+.account-card a, .card.fantasy-card a {
+    color: var(--blue);
+    text-decoration: underline;
+    font-family: 'MedievalSharp', cursive;
+}
+.account-card a:hover, .card.fantasy-card a:hover {
+    color: var(--gold);
+}
+
+.account-card form, .card.fantasy-card form {
+    margin-bottom: 0;
+}
+.account-card input, .card.fantasy-card input, .account-card select, .card.fantasy-card select {
+    border-radius: 6px;
+    border: 1.5px solid var(--brown-light);
+    background: var(--parchment);
+    color: var(--text);
+    font-family: 'Cinzel', serif;
+}
+.account-card input:focus, .card.fantasy-card input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px var(--gold-light);
+}
 /* ============================================
    Dice & Dragons — Fantasy Grimoire Theme
    ============================================ */
@@ -383,6 +638,17 @@ main.container::before {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
+}
+
+/* --- Product Card Image (edge-to-edge, responsive) --- */
+.fantasy-card-img {
+    display: block;
+    width: calc(100% + 3rem);       /* вирватися за padding картки (1.5rem * 2) */
+    margin: -1.5rem -1.5rem 1rem -1.5rem;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    /* Верхні кути обрізаються через overflow:hidden на .fantasy-card */
 }
 
 /* --- Category / Product Cards (scroll-like) --- */

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Пошук: {{ query }} — Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="fantasy-breadcrumb">
+    <a href="{% url 'products:home' %}">Головна</a>
+    <span class="separator">/</span>
+    <span>Пошук</span>
+</div>
+
+<h1 class="fantasy-title">🔍 Пошук</h1>
+
+<form action="{% url 'products:search' %}" method="get" class="fantasy-search-form mb-4" style="max-width:480px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Назва або опис гри..." class="fantasy-search-input" style="flex:1;">
+    <button type="submit" class="fantasy-search-btn">🔍</button>
+</form>
+
+{% if query %}
+    {% if results %}
+        <p class="fantasy-card-desc" style="margin-bottom:1.5rem;">
+            Знайдено <strong>{{ results|length }}</strong> {% if results|length == 1 %}гра{% else %}ігор{% endif %} за запитом «{{ query }}»
+        </p>
+        <div class="fantasy-grid">
+            {% for product in results %}
+            <div class="fantasy-card">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fantasy-card-img">
+                {% endif %}
+                <div class="fantasy-badge">{{ product.category.name }}</div>
+                <div class="fantasy-card-title" style="margin-top:0.8rem;">
+                    <a href="{% url 'products:product_details' slug=product.slug %}">{{ product.name }}</a>
+                </div>
+                <div class="fantasy-card-desc">{{ product.description|truncatewords:12 }}</div>
+                <div class="fantasy-card-meta">
+                    <span>{{ product.min_players }}-{{ product.max_players }} гравців</span>
+                    <span>{{ product.play_time }} хв</span>
+                    <span>{{ product.age_recommendation }}+</span>
+                </div>
+                <div class="fantasy-card-footer">
+                    <span class="fantasy-price-small">{{ product.price }} грн</span>
+                    <span class="fantasy-rating">{{ product.rating }}/10</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="fantasy-empty">За запитом «{{ query }}» нічого не знайдено...</div>
+    {% endif %}
+{% else %}
+    <div class="fantasy-empty">Введіть назву або опис гри для пошуку.</div>
+{% endif %}
+
+{% endblock %}

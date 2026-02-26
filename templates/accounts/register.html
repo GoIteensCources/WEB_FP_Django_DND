@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Реєстрація | Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="account-card p-4 mt-2">
+
+      <h2 class="fantasy-title text-center">📜 Реєстрація Авантюриста</h2>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+          <div class="mb-3">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <div class="account-help-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% if field.errors %}
+              {% for error in field.errors %}
+                <div class="account-field-error">⚠ {{ error }}</div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success w-100 mt-1">Зареєструватися</button>
+      </form>
+
+      <div class="fantasy-divider mt-4"><span>✦</span></div>
+      <div class="text-center">
+        <a href="{% url 'account:login' %}" class="fantasy-link">Вже є акаунт? Увійти</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
