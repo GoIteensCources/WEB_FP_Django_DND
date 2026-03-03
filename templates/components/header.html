@@ -13,9 +13,6 @@
             <nav class="fantasy-nav-row" id="mainNav">
                 <ul class="fantasy-nav-list">
                     <li>
-                        <a href="{% url 'products:home' %}" class="fantasy-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Головна</a>
-                    </li>
-                    <li>
                         <a href="{% url 'products:categories_list' %}" class="fantasy-nav-link {% if request.resolver_match.url_name == 'categories_list' or request.resolver_match.url_name == 'category' %}active{% endif %}">Гільдії</a>
                     </li>
                     <li>
@@ -41,6 +38,12 @@
                             <input type="text" name="q" placeholder="Пошук..." class="fantasy-search-input">
                             <button type="submit" class="fantasy-search-btn">🔍</button>
                         </form>
+                    </li>
+                    <li>
+                        <a href="{% url 'cart:cart_details' %}" class="fantasy-nav-link fantasy-cart-link">
+                            🛒 Кошик
+                           <span class="fantasy-cart-count">{{ cart_item_count }}</span>
+                        </a>
                     </li>
                 </ul>
             </nav>

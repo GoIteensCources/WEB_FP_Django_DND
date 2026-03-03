@@ -26,7 +26,10 @@
         </div>
 
         <div class="fantasy-price">{{ product.price }} грн</div>
-
+        <form method="post" action="{% url 'cart:add_cart' product.id %}" style="margin-top:0.5rem;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary fantasy-add-cart-btn">Додати до кошика</button>
+        </form>
         <div class="fantasy-rating" style="font-size:1.1rem;">
             Рейтинг: {{ product.rating }}/10
         </div>
