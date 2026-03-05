@@ -242,14 +242,17 @@
 .account-card form, .card.fantasy-card form {
     margin-bottom: 0;
 }
-.account-card input, .card.fantasy-card input, .account-card select, .card.fantasy-card select {
+.account-card input, .card.fantasy-card input,
+.account-card select, .card.fantasy-card select,
+.account-card textarea, .card.fantasy-card textarea {
     border-radius: 6px;
     border: 1.5px solid var(--brown-light);
     background: var(--parchment);
     color: var(--text);
     font-family: 'Cinzel', serif;
 }
-.account-card input:focus, .card.fantasy-card input:focus {
+.account-card input:focus, .card.fantasy-card input:focus,
+.account-card textarea:focus, .card.fantasy-card textarea:focus {
     border-color: var(--gold);
     box-shadow: 0 0 0 2px var(--gold-light);
 }

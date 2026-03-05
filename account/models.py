@@ -16,8 +16,8 @@ class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='addresses', null=True, blank=True)
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=20)
+    zip_code = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Address: {self.city}, {self.postal_code}, {self.country}"
+        return f"Address: {self.city}, {self.zip_code}, {self.country}"

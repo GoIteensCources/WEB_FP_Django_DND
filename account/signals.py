@@ -7,7 +7,7 @@ from .models import Profile, Address
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        address = Address.objects.create(user=instance, street='', city='', postal_code='', country='')
+        address = Address.objects.create(user=instance, street='', city='', zip_code='', country='')
         Profile.objects.create(user=instance, address=address)
  
         

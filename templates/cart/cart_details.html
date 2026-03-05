@@ -85,7 +85,7 @@
             <div class="fantasy-cart-total">
                 Разом: <span>{{ total|floatformat:2 }} ₴</span>
             </div>
-            <a href="#" class="btn-fantasy fantasy-checkout-btn" aria-disabled="true">
+            <a href="{% url 'order:checkout' %}" class="btn-fantasy fantasy-checkout-btn">
                 Оформити замовлення
             </a>
         </div>

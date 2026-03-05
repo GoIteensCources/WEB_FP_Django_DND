@@ -10,5 +10,5 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('user', 'city', 'country', 'postal_code')
+    list_display = ('user', 'city', 'country', 'zip_code')
     list_filter = ('country',)

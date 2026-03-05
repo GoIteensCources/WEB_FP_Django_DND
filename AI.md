@@ -55,7 +55,7 @@ python manage.py test products.tests.MyTest   # single test class
 
 **`Profile`:** OneToOne with `User`; `phone_number`, FK to `Address`
 
-**`Address`:** FK to `User`; `street`, `city`, `postal_code`, `country`
+**`Address`:** FK to `User`; `street`, `city`, `zip_code`, `country`
 
 **`Cart`:** OneToOne with `User`; related items via `CartItem`
 

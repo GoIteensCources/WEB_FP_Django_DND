@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Замовлення підтверджено — Dice & Dragons{% endblock %}
+
+{% block content %}
+<div class="fantasy-breadcrumb">
+    <a href="{% url 'products:home' %}">Головна</a>
+    <span class="separator">/</span>
+    <span>Підтвердження замовлення</span>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="account-card p-4">
+
+            <div class="text-center mb-3" style="font-size:3rem;">🎉</div>
+            <h1 class="fantasy-title text-center">Дякуємо за замовлення!</h1>
+            <p class="text-center">Ваше замовлення <strong>#{{ order.id }}</strong> прийнято.<br>
+            Ми зв'яжемося з вами для підтвердження та доставки.</p>
+
+            <div class="account-section-title">Деталі доставки</div>
+            <ul class="account-info-list">
+                <li>
+                    <span class="account-info-label">Отримувач</span>
+                    <span class="account-info-value">{{ order.shipping_name }}</span>
+                </li>
+                <li>
+                    <span class="account-info-label">Місто</span>
+                    <span class="account-info-value">{{ order.shipping_city }}</span>
+                </li>
+                <li>
+                    <span class="account-info-label">Вулиця</span>
+                    <span class="account-info-value">{{ order.shipping_street }}</span>
+                </li>
+                <li>
+                    <span class="account-info-label">Індекс</span>
+                    <span class="account-info-value">{{ order.shipping_zip_code }}</span>
+                </li>
+                <li>
+                    <span class="account-info-label">Країна</span>
+                    <span class="account-info-value">{{ order.shipping_country }}</span>
+                </li>
+                <li>
+                    <span class="account-info-label">Сума замовлення</span>
+                    <span class="account-info-value fantasy-price-small">{{ order.total_price|floatformat:2 }} ₴</span>
+                </li>
+            </ul>
+
+            <div class="fantasy-divider mt-3"><span>✦</span></div>
+
+            <div class="d-flex gap-3 justify-content-center flex-wrap mt-3">
+                <a href="{% url 'order:history' %}" class="btn-fantasy-outline">Мої замовлення</a>
+                <a href="{% url 'products:product_list' %}" class="btn-fantasy">До каталогу</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

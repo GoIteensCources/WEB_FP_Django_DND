@@ -47,7 +47,7 @@ def edit_profile_view(request):
     # Ensure address exists
     if profile.address is None:
         address = Address.objects.create(
-            user=request.user, street='', city='', postal_code='', country=''
+            user=request.user, street='', city='', zip_code='', country=''
         )
         profile.address = address
         profile.save()

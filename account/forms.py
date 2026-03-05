@@ -76,11 +76,11 @@ class ProfileForm(forms.ModelForm):
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
-        fields = ('street', 'city', 'postal_code', 'country')
+        fields = ('street', 'city', 'zip_code', 'country')
         labels = {
             'street': 'Вулиця, будинок',
             'city': 'Місто',
-            'postal_code': 'Поштовий індекс',
+            'zip_code': 'Поштовий індекс',
             'country': 'Країна',
         }
 
