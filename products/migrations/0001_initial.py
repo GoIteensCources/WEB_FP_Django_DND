@@ -8,47 +8,100 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, unique=True)),
-                ('slug', models.SlugField(max_length=255, unique=True)),
-                ('icon', models.CharField(blank=True, help_text='Emoji або іконка', max_length=100)),
-                ('description', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, unique=True)),
+                ("slug", models.SlugField(max_length=255, unique=True)),
+                (
+                    "icon",
+                    models.CharField(
+                        blank=True, help_text="Emoji або іконка", max_length=100
+                    ),
+                ),
+                ("description", models.TextField(blank=True)),
             ],
             options={
-                'verbose_name': 'Категорія',
-                'verbose_name_plural': 'Категорії',
-                'ordering': ['name'],
+                "verbose_name": "Категорія",
+                "verbose_name_plural": "Категорії",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, unique=True)),
-                ('slug', models.SlugField(max_length=255, unique=True)),
-                ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=8)),
-                ('rating', models.IntegerField(default=0, help_text='Рейтинг від 0 до 10')),
-                ('min_players', models.IntegerField(default=2, help_text='Мінімальна кількість гравців')),
-                ('max_players', models.IntegerField(default=4, help_text='Максимальна кількість гравців')),
-                ('play_time', models.IntegerField(default=60, help_text='Середній час гри в хвилинах')),
-                ('age_recommendation', models.IntegerField(default=12, help_text='Рекомендований вік гравців')),
-                ('image', models.ImageField(blank=True, null=True, upload_to='products/')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products', to='products.category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, unique=True)),
+                ("slug", models.SlugField(max_length=255, unique=True)),
+                ("description", models.TextField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=8)),
+                (
+                    "rating",
+                    models.IntegerField(default=0, help_text="Рейтинг від 0 до 10"),
+                ),
+                (
+                    "min_players",
+                    models.IntegerField(
+                        default=2, help_text="Мінімальна кількість гравців"
+                    ),
+                ),
+                (
+                    "max_players",
+                    models.IntegerField(
+                        default=4, help_text="Максимальна кількість гравців"
+                    ),
+                ),
+                (
+                    "play_time",
+                    models.IntegerField(
+                        default=60, help_text="Середній час гри в хвилинах"
+                    ),
+                ),
+                (
+                    "age_recommendation",
+                    models.IntegerField(
+                        default=12, help_text="Рекомендований вік гравців"
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(blank=True, null=True, upload_to="products/"),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="products",
+                        to="products.category",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Продукт',
-                'verbose_name_plural': 'Продукти',
-                'ordering': ['name'],
+                "verbose_name": "Продукт",
+                "verbose_name_plural": "Продукти",
+                "ordering": ["name"],
             },
         ),
     ]
