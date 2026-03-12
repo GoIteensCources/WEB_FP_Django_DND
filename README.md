@@ -4,48 +4,39 @@
 
 ## Стек
 
-- Python 3.12
-- Django 6.0.2
-- SQLite
-- HTML/CSS (кастомна fantasy-тема)
+- Python 3.12 / Django 6.0.2
+- SQLite (розробка)
+- Redis (опційно, для кешування)
+- Whitenoise (роздача статики)
+- django-ratelimit (захист від брутфорсу)
+- Django Debug Toolbar
 
-## Структура проєкту
+## Додатки
 
-```
-Dice_N_Dragon/
-├── dnd_project/        # Налаштування Django (settings, urls, wsgi)
-├── products/           # Основний додаток
-│   ├── models.py       # Category, Product
-│   ├── views.py        # FBV + CBV
-│   ├── urls.py
-│   └── management/
-│       └── commands/
-│           └── create_products.py  # Команда наповнення БД
-├── account/            # Додаток для акаунтів
-├── templates/          # HTML-шаблони
-│   ├── base.html
-│   ├── components/
-│   └── projects/       # Шаблони магазину
-├── static/
-│   ├── dnd_fantasy.css
-│   └── media/
-│       └── products/   # Зображення товарів
-└── manage.py
-```
+| Додаток | Призначення |
+|---------|-------------|
+| `products` | Каталог: моделі `Category` та `Product`, пошук, кешування категорій |
+| `account` | Реєстрація / вхід, профіль, адреса доставки |
+| `cart` | Кошик (БД для авторизованих, сесія для анонімних) |
+| `order` | Оформлення замовлення, історія замовлень |
 
 ## Встановлення та запуск
 
 ```bash
-# Клонувати репозиторій та перейти в папку
-cd Dice_N_Dragon
+# Клонувати репозиторій
+git clone <repo-url>
+cd WEB_FP_Django_DND
 
 # Створити та активувати віртуальне середовище
 python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# .venv\Scripts\activate   # Windows
+source .venv/bin/activate   # Linux/Mac
+# .venv\Scripts\activate    # Windows
 
 # Встановити залежності
-pip install django pillow
+pip install django pillow python-dotenv django-redis django-ratelimit debug-toolbar whitenoise
+
+# Створити .env файл
+cp .env.example .env  # або створити вручну
 
 # Застосувати міграції
 python manage.py migrate
@@ -59,30 +50,48 @@ python manage.py runserver
 
 Відкрити у браузері: http://127.0.0.1:8000
 
+## Змінні середовища (`.env`)
+
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+REDIS_URL=redis://localhost:6379/0   # опційно
+```
+
+Якщо `REDIS_URL` не задано — використовується `LocMemCache`.
+
 ## URL-маршрути
 
 | URL | Опис |
 |-----|------|
 | `/` | Головна сторінка |
-| `/categories/` | Список категорій (гільдій) |
+| `/categories/` | Список категорій |
 | `/categories/<slug>/` | Ігри певної категорії |
 | `/products/` | Каталог усіх ігор |
 | `/products/<slug>/` | Картка товару |
+| `/cart/` | Кошик |
+| `/order/checkout/` | Оформлення замовлення |
+| `/order/history/` | Історія замовлень |
+| `/account/register/` | Реєстрація |
+| `/account/login/` | Вхід |
+| `/account/profile/` | Профіль користувача |
 | `/admin/` | Адмін-панель |
 
-## Моделі
+## Тести
 
-**Category** — категорія ігор
-`name`, `slug`, `icon` (emoji), `description`
-
-**Product** — настільна гра
-`name`, `slug`, `category`, `description`, `price`, `rating`, `min_players`, `max_players`, `play_time`, `age_recommendation`, `image`
-
-## Медіафайли
-
-Зображення зберігаються у `static/media/products/`.
-У `settings.py`:
-```python
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'static' / 'media'
+```bash
+python manage.py test              # усі тести
+python manage.py test products
+python manage.py test cart
+python manage.py test account
+python manage.py test order
 ```
+
+## Ключові особливості
+
+- **Кошик**: двохрежимний — для авторизованих користувачів зберігається в БД (`Cart`/`CartItem`), для анонімних — у сесії.
+- **Кешування**: список категорій кешується на 12 годин; скидається автоматично через сигнали при зміні `Category`.
+- **Захист**: `@ratelimit` на ендпоінтах входу та реєстрації (10 запитів/хв з IP).
+- **Замовлення**: `OrderItem` зберігає знімок назви та ціни товару на момент покупки.
+- **Slug**: автогенерується з `name` при першому збереженні моделей `Category` і `Product`.
